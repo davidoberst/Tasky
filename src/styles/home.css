@@ -27,7 +27,7 @@ body {
   padding: 25px;                  /* espacio interno */
   margin: 20px auto;              /* centra horizontal */
   width: 75%;
-  height: 400px;
+  height: 460px;
   
   background-color: #f5f5f5;      /* gris clarito */
   border-radius: 20px;            /* esquinas redondeadas */
@@ -84,4 +84,74 @@ body {
   color: #242424;     /* verde */
   margin-left: 8px;   /* espacio entre el texto y el icono */
   font-size: 18px;    /* tamaño del icono */
+}
+
+
+.userIcon{
+margin-top: 25px;
+width: 110px;
+height: 110px;
+
+}
+
+
+.user_name{
+  margin-top: 8px;
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+.pencil_edit_ico{
+color: rgb(27, 27, 27);
+font-size: 19px;
+ transition: color 0.3s, transform 0.3s; 
+ cursor: pointer;
+}
+ .pencil_edit_ico:hover {
+    color: rgb(0, 0, 0);         /* cambia de color al pasar el mouse */
+    transform: scale(1.1); /* agranda 1.5 veces */
+  }
+
+  .button_total_tasks,
+   .button_finished_tasks,
+   .button_no_finished_tasks{
+    text-align: center;
+    justify-content: center;
+    font-family: "Roboto Flex", sans-serif;
+    border: none;
+    background-color: #bdbdbd ;
+    height: 40px;
+    width: 200px;
+    font-size: 18px;
+    border-radius: 100px;
+     transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .text_total_tasks{
+    padding-top: 8px;
+  }
+   
+.button_total_tasks:hover,
+.button_finished_tasks:hover,
+.button_no_finished_tasks:hover {
+    background-color: #bebebe;
+    transform: scale(1.1);
+}
+
+.deleteAllButton{
+    text-align: center;
+    justify-content: center;
+    font-family: "Roboto Flex", sans-serif;
+    border: none;
+    background-color: #898989 ;
+    height: 40px;
+    width: 200px;
+    font-size: 18px;
+    border-radius: 100px;
+     transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.deleteAllButton:hover{
+   background-color: #5c5c5c;
+    transform: scale(1.1);
 }

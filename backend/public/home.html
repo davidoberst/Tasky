@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap" rel="stylesheet">
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/home.css">
+    <title>Tasky</title>
+</head>
+<body>
+ <img  class="logo" src="./media/icon.png" alt="logo">   
+ 
+ <div class="containerFather"> 
+      <div class="containerLeft">
+        <center>
+        <img class="userIcon" src="./media/userIcon.png" alt="">
+        <p class="user_name">User <i class="fas fa-pencil-alt pencil_edit_ico"></i></p>
+        <div class="button_total_tasks"> <p class="text_total_tasks">Total tasks :</p></div>
+        <div class="button_finished_tasks"> <p class="text_total_tasks">Finished tasks :</p></div>
+        <div class="button_no_finished_tasks"> <p class="text_total_tasks">Unfilled tasks :</p></div>
+        <div class="deleteAllButton"> <p class="text_total_tasks">Delete all tasks</p></div>
+        
+        </center>
+      </div>
+        <!-- create a new task  -->
+        <div class="containerRight">
+            <p class="helloUser">Hi, User</p>
+            <button id="createTask">New Task <i class="fas fa-plus-circle"></i> </button>
+        <!-- create a new task  -->
+
+        
+        <!-- create a new task form (hidden html) -->
+                <div class="hiddenFormTasks">
+                  <button class="hdf_closeBtn">&times;</button>
+                  <p class="hdf_title">New Task</p>
+                  <label for="taskName" class="hdf_tasknamelabel">Name</label>
+                  <input type="text" id="taskName" class="hdf_tasknameinput" placeholder="Example"><br>
+
+                  <label for="taskDate" class="hdf_datelabel">Date</label>
+                  <input type="date" id="taskDate" class="hdf_dateinput"><br>
+
+                  <label for="taskHour" class="hdf_hourlabel">Hour</label>
+                  <input type="time" id="taskHour" class="hdf_hourinput"><br>
+
+                  <button class="doneFormButton">Done</button>
+                </div>
+      <!-- create a new task form (hidden html) -->
+
+
+
+
+         </div>
+    </div>
+ </div>
+
+  <script src="./scripts/home.js"></script>
+
+
+
+
+
+
+
+</body>
+</html>

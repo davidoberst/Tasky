@@ -1,0 +1,337 @@
+
+body {
+    font-family: "Roboto Flex", sans-serif;
+  opacity: 0;                       /* estado inicial */
+  animation: fadeIn 3s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+.logo{
+ padding-top: 40px;
+ padding-bottom: 15px;
+ display: block;
+ margin: 0 auto;
+ width: 210px ;
+ height:110px ;
+}
+
+
+
+.containerFather {
+  display: flex;                  /* coloca los hijos en fila */
+  gap: 50px;                      /* espacio entre los div internos */
+  padding: 25px;                  /* espacio interno */
+  margin: 20px auto;              /* centra horizontal */
+  width: 75%;
+  height: 460px;
+  
+  background-color: #f5f5f5;      /* gris clarito */
+  border-radius: 20px;            /* esquinas redondeadas */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.488); /* sombra */
+}
+
+.containerLeft,
+.containerRight {
+  background-color: #d9d9d9;      /* gris de las cajas */
+  border-radius: 20px;
+  position: relative;
+  
+}
+
+/* la caja izquierda más angosta */
+.containerLeft {
+  flex: 1;                        /* ocupa menos espacio */
+}
+
+/* la caja derecha más ancha */
+.containerRight {
+  flex: 3;                        /* ocupa el doble que la izquierda */
+}
+
+
+.helloUser{
+    font-family: "Roboto Flex", sans-serif;
+    margin-left: 40px;
+    color: rgb(9, 9, 9);
+    font-size: 30px;
+}
+
+#createTask{
+    text-align: left;
+    font-family: "Roboto Flex", sans-serif;
+    border: none;
+    background-color: #bdbdbd ;
+    height: 40px;
+    width: 150px;
+    font-size: 20px;
+    padding-left: 15px;
+    border-radius: 100px;
+    margin-left: 25px;
+    margin-top: -15px;
+     transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+#createTask:hover{
+    background-color: #a7a7a7;
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+
+#createTask i {
+  color: #242424;     /* verde */
+  margin-left: 8px;   /* espacio entre el texto y el icono */
+  font-size: 18px;    /* tamaño del icono */
+}
+
+
+.userIcon{
+margin-top: 25px;
+width: 110px;
+height: 110px;
+
+}
+
+
+.user_name{
+  margin-top: 8px;
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+.pencil_edit_ico{
+color: rgb(27, 27, 27);
+font-size: 19px;
+ transition: color 0.3s, transform 0.3s; 
+ cursor: pointer;
+}
+ .pencil_edit_ico:hover {
+    color: rgb(0, 0, 0);         /* cambia de color al pasar el mouse */
+    transform: scale(1.1); /* agranda 1.5 veces */
+  }
+
+  .button_total_tasks,
+   .button_finished_tasks,
+   .button_no_finished_tasks{
+    text-align: center;
+    justify-content: center;
+    font-family: "Roboto Flex", sans-serif;
+    border: none;
+    background-color: #bdbdbd ;
+    height: 40px;
+    width: 200px;
+    font-size: 18px;
+    border-radius: 100px;
+     transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .text_total_tasks{
+    padding-top: 8px;
+  }
+   
+.button_total_tasks:hover,
+.button_finished_tasks:hover,
+.button_no_finished_tasks:hover {
+    background-color: #bebebe;
+    transform: scale(1.1);
+}
+
+.deleteAllButton{
+    text-align: center;
+    justify-content: center;
+    font-family: "Roboto Flex", sans-serif;
+    border: none;
+    background-color: #898989 ;
+    height: 40px;
+    width: 200px;
+    font-size: 18px;
+    border-radius: 100px;
+     transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.deleteAllButton:hover{
+   background-color: #5c5c5c;
+    transform: scale(1.1);
+}
+
+/* cabecera con título y botón cerrar */
+.newTaskHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.newTaskTitle {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.closeTask {
+  background: none;
+  border: none;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.closeTask:hover {
+  transform: scale(1.2);
+  color: #333;
+}
+
+/* formulario general */
+.taskForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.taskInput {
+  display: flex;
+  flex-direction: column;
+}
+
+.taskInput label {
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: #1a1a1a;
+}
+
+.taskInput input {
+  border: none;
+  background-color: #c5c5c5;
+  height: 38px;
+  padding-left: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #111;
+}
+
+/* botón Done */
+.doneButton {
+  align-self: center;
+  margin-top: 10px;
+  width: 120px;
+  height: 38px;
+  border: none;
+  border-radius: 20px;
+  background-color: #7d7d7d;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.doneButton:hover {
+  background-color: #5a5a5a;
+  transform: scale(1.05);
+}
+
+
+/* CREATE TASK HIDDEN FORM, hdf means hidden form */
+
+
+
+.hdf_closeBtn {
+  
+  background: none;
+  border: none;
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  position: absolute;   /* se queda fija en la esquina */
+  top: 15px;
+  right: 20px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.hdf_closeBtn:hover {
+  transform: scale(1.2);
+  color: #000;
+}
+
+
+.hdf_title {
+  margin-left: 40px;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #1a1a1a;
+}
+
+.hdf_tasknamelabel,
+.hdf_datelabel,
+.hdf_hourlabel {
+  margin-left: 40px;
+
+  font-size: 20px;
+  margin-bottom: 6px;
+  display: block;
+  color: #1a1a1a;
+}
+
+.hdf_tasknameinput,
+.hdf_dateinput,
+.hdf_hourinput {
+  margin-left: 40px;
+
+  font-family: "Roboto Flex", sans-serif;
+  width: 100%;
+  max-width: 280px;
+  height: 38px;
+  border: none;
+  background-color: #c5c5c5;
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-bottom: 15px;
+  font-size: 20px;
+  color: #111;
+}
+
+.doneFormButton {
+  margin-left: 40px;
+
+  display: block;
+  margin-top: 10px;
+  width: 120px;
+  height: 38px;
+  border: none;
+  border-radius: 20px;
+  background-color: #7d7d7d;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.doneFormButton:hover {
+  background-color: #5a5a5a;
+  transform: scale(1.05);
+}
+
+.hiddenFormTasks {
+  opacity: 0;
+  transform: scale(0.95); /* un poquito más pequeño */
+  pointer-events: none;   /* no se puede clicar cuando está oculto */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  position: relative;
+}
+
+/* cuando está visible */
+.hiddenFormTasks.show {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+
+/* CREATE TASK HIDDEN FORM */

@@ -18,10 +18,17 @@ app.get("/api/tasks", (req, res) => {
 
 
 app.post("/api/tasks", (req, res) => {
-  const { title } = req.body; // extraemos el título enviado
+  const { name, date, hour } = req.body; // extraemos el título enviado
+
+  if(!name || !date || !hour){
+    return res.status(400).json({ error: "Faltan campos: name, date y hour son obligatorios" });
+  }
+
   const newTask = {
     id: Date.now(),  // id único usando la fecha
-    title,           // lo que envió el usuario
+    name,     
+    date,
+    hour, // lo que envió el usuario
     done: false      // por defecto, no está completada
   };
 
@@ -32,3 +39,5 @@ app.post("/api/tasks", (req, res) => {
 app.listen(PORT, ()=>{
     console.log("server working in http://localhost",PORT)
 })
+
+

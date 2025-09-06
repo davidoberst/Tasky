@@ -36,6 +36,7 @@ body {
 
 .containerLeft,
 .containerRight {
+  
   background-color: #d9d9d9;      /* gris de las cajas */
   border-radius: 20px;
   position: relative;
@@ -133,6 +134,13 @@ font-size: 19px;
     padding-top: 8px;
   }
    
+   .text_finished_tasks{
+    padding-top: 8px;
+  }
+
+   .text_unfilled_tasks{
+    padding-top: 8px;
+  }
 .button_total_tasks:hover,
 .button_finished_tasks:hover,
 .button_no_finished_tasks:hover {
@@ -335,3 +343,76 @@ font-size: 19px;
 
 
 /* CREATE TASK HIDDEN FORM */
+#containerTasks {
+  margin-top: 20px;
+  max-height: 280px;
+  overflow-y: auto; /* Scroll solo aparece cuando es necesario */
+  
+  /* Estética */
+  padding-right: 5px; /* Evita que el contenido quede debajo de la scrollbar */
+}
+
+/* Scrollbar moderno para Webkit (Chrome, Edge, Safari) */
+#containerTasks::-webkit-scrollbar {
+  width: 8px; /* Ancho de la barra */
+}
+
+#containerTasks::-webkit-scrollbar-track {
+  background: transparent; /* Fondo del track */
+  border-radius: 4px;
+}
+
+#containerTasks::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color de la barra */
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+#containerTasks::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.6); /* Más visible al pasar el mouse */
+}
+
+/* Firefox */
+#containerTasks {
+  scrollbar-width: thin; /* delgada */
+  scrollbar-color: rgba(0,0,0,0.3) transparent; /* color del thumb y track */
+}
+.taskInfoDiv {
+  margin-top: 25px;
+  margin-left: 25px;
+  margin-bottom: 25px;
+  font-family: "Roboto Flex", sans-serif;
+  border: none;
+  background-color: #bdbdbd;
+  height: 40px;
+  width: 600px;
+  font-size: 18px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+
+}
+.task_Check {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.task_Name {
+    flex: 1;               /* Ocupar espacio intermedio */
+    margin: 0 15px;        /* Separación de checkbox y fecha */
+    white-space: nowrap;   /* Evitar que se corte el texto */
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.task_Date,
+.task_Hour {
+    white-space: nowrap;
+    margin-left: 10px;
+}

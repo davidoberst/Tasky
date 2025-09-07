@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const totalTasksPanelText = document.querySelector(".text_total_tasks")
   const taskCheckbok = document.getElementById("task_Check");
   const finishedTaskPanelText =document.querySelector(".text_finished_tasks")
+  const deleteTaskBtn = document.querySelectorAll(".deleteTaskBtn")
 
     // ✅ cargar tareas al inicio
   fetch("/api/tasks")
@@ -41,19 +42,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 🔹 función para renderizar UNA sola tarea
-  function renderTask(task) {
-    const div = document.createElement("div");
-    
-    div.classList.add("taskInfoDiv");
-      div.innerHTML = `
+ function renderTask(task) {
+  const div = document.createElement("div");
+  div.classList.add("taskInfoDiv");
+
+  div.innerHTML = `
     <input type="checkbox" class="task_Check">
     <p class="task_Name">${task.name}</p>
     <p class="task_Date">${task.date}</p>
     <p class="task_Hour">${task.hour}</p>
+    <i class="fa-solid fa-trash deleteTaskBtn"></i>
   `;
-    containerTasks.appendChild(div);
-  }
 
+  // 🔹 guardar el id de la tarea en el div
+  div.dataset.id = task.id;
+
+  // 🔹 evento para borrar
+  const deleteBtn = div.querySelector(".deleteTaskBtn");
+  deleteBtn.addEventListener("click", async () => {
+    const confirmDelete = confirm("¿Seguro que quieres eliminar esta tarea?");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`/api/tasks/${task.id}`, {
+        method: "DELETE"
+      });
+
+      if (!res.ok) {
+        throw new Error("Error al eliminar la tarea");
+      }
+
+      // quitar del DOM
+      div.remove();
+
+      console.log(`Tarea ${task.id} eliminada`);
+    } catch (err) {
+      console.error("No se pudo borrar la tarea:", err);
+      alert("Error al borrar la tarea");
+    }
+  });
+
+  containerTasks.appendChild(div);
+}
 
 
   // ✅ enviar nueva tarea

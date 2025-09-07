@@ -416,3 +416,12 @@ font-size: 19px;
     white-space: nowrap;
     margin-left: 10px;
 }
+
+.deleteTaskBtn{
+  margin-left: 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.deleteTaskBtn:hover{
+  transform: scale(1.1);
+}

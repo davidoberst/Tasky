@@ -41,5 +41,15 @@ app.listen(PORT, ()=>{
 })
 
 
+//delete task 
+app.delete("/api/tasks/:id", (req, res) => {
+  const taskId = Number(req.params.id); // id viene como string, lo convertimos a número
+  const index = tasks.findIndex(task => task.id === taskId);
 
+  if (index === -1) {
+    return res.status(404).json({ error: "Tarea no encontrada" });
+  }
 
+  const deletedTask = tasks.splice(index, 1); // eliminamos del array
+  res.json(deletedTask[0]); // respondemos con la tarea eliminada
+});

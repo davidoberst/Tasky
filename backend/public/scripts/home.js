@@ -72,9 +72,11 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Error al eliminar la tarea");
       }
 
-      // quitar del DOM
+      // quitar del DOM y actualizar el panel 
       div.remove();
-
+      const fetchArrayTasks = await fetch("api/tasks");
+      const convertArrayTasks= await fetchArrayTasks.json();
+      showTotal(convertArrayTasks);
       console.log(`Tarea ${task.id} eliminada`);
     } catch (err) {
       console.error("No se pudo borrar la tarea:", err);
@@ -84,6 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   containerTasks.appendChild(div);
 }
+
+
 
 
   // ✅ enviar nueva tarea
@@ -152,12 +156,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!tasks || tasks.length === 0) {
         totalTasksPanelText.textContent = "Total Tasks: 0";
         console.log("Total tasks: 0");
+        
     } else {
         totalTasksPanelText.textContent = `Total Tasks: ${tasks.length}`;
         console.log("El total es", tasks.length);
     }
 
    //total tareas completadas
+
+
+
+
    
 }
 

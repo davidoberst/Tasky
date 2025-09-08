@@ -53,3 +53,12 @@ app.delete("/api/tasks/:id", (req, res) => {
   const deletedTask = tasks.splice(index, 1); // eliminamos del array
   res.json(deletedTask[0]); // respondemos con la tarea eliminada
 });
+
+app.patch("/api/tasks/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const task = tasks.find(t => t.id === id);
+  if (!task) return res.status(404).json({ error: "Tarea no encontrada" });
+
+  task.done = req.body.done; // true o false
+  res.json(task);
+});

@@ -3,94 +3,95 @@ document.addEventListener("DOMContentLoaded", () => {
   const formTasks = document.querySelector(".hiddenFormTasks");
   const closeBtn = formTasks.querySelector(".hdf_closeBtn");
   const doneBtn = formTasks.querySelector(".doneFormButton");
-  const containerRight = document.querySelector(".containerRight");
   const containerTasks = document.getElementById("containerTasks");
-  const totalTasksPanelText = document.querySelector(".text_total_tasks")
-  const taskCheckbok = document.getElementById("task_Check");
-  const finishedTaskPanelText =document.querySelector(".text_finished_tasks")
-  const deleteTaskBtn = document.querySelectorAll(".deleteTaskBtn")
+  const totalTasksPanelText = document.querySelector(".text_total_tasks");
+  const finishedTaskPanelText = document.querySelector(".text_finished_tasks");
 
-    // ✅ cargar tareas al inicio
+  // ✅ Cargar tareas al inicio
   fetch("/api/tasks")
     .then(res => res.json())
     .then(data => {
-      renderTasks(data); // muestra todas las tareas guardadas
-      showTotal(data); // muestra el numero de tareas guardadas
+      renderTasks(data);
+      showTotal(data);
+      showFinished(data);
     })
     .catch(err => console.error("Error cargando tareas:", err));
 
-  // abrir con transición
+  // Abrir formulario
   createTaskBtn.addEventListener("click", () => {
     formTasks.classList.add("show");
     createTaskBtn.style.display = "none";
     containerTasks.style.display = "none";
-
   });
 
-  // cerrar con transición
+  // Cerrar formulario
   closeBtn.addEventListener("click", () => {
     formTasks.classList.remove("show");
     createTaskBtn.style.display = "inline-block";
     containerTasks.style.display = "block";
   });
 
-  //  función para renderizar varias tareas
+  // Renderizar varias tareas
   function renderTasks(tasks) {
-    tasks.forEach(task => {
-      renderTask(task); // reutilizamos la de una sola
-    });
+    tasks.forEach(task => renderTask(task));
   }
 
-  // 🔹 función para renderizar UNA sola tarea
- function renderTask(task) {
-  const div = document.createElement("div");
-  div.classList.add("taskInfoDiv");
+  // 🔹 Renderizar una tarea
+  function renderTask(task) {
+    const div = document.createElement("div");
+    div.classList.add("taskInfoDiv");
 
-  div.innerHTML = `
-    <input type="checkbox" class="task_Check">
-    <p class="task_Name">${task.name}</p>
-    <p class="task_Date">${task.date}</p>
-    <p class="task_Hour">${task.hour}</p>
-    <i class="fa-solid fa-trash deleteTaskBtn"></i>
-  `;
+    div.innerHTML = `
+      <input type="checkbox" class="task_Check" ${task.done ? "checked" : ""}>
+      <p class="task_Name">${task.name}</p>
+      <p class="task_Date">${task.date}</p>
+      <p class="task_Hour">${task.hour}</p>
+      <i class="fa-solid fa-trash deleteTaskBtn"></i>
+    `;
 
-  // 🔹 guardar el id de la tarea en el div
-  div.dataset.id = task.id;
+    div.dataset.id = task.id;
 
-  // 🔹 evento para borrar
-  const deleteBtn = div.querySelector(".deleteTaskBtn");
-  deleteBtn.addEventListener("click", async () => {
-    const confirmDelete = confirm("¿Seguro que quieres eliminar esta tarea?");
-    if (!confirmDelete) return;
+    // Checkbox
+    const checkbox = div.querySelector(".task_Check");
+    checkbox.addEventListener("change", async () => {
+      try {
+        await fetch(`/api/tasks/${task.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ done: checkbox.checked })
+        });
 
-    try {
-      const res = await fetch(`/api/tasks/${task.id}`, {
-        method: "DELETE"
-      });
-
-      if (!res.ok) {
-        throw new Error("Error al eliminar la tarea");
+        updateFinishedPanel();
+      } catch (err) {
+        console.error("Error actualizando tarea:", err);
+        alert("No se pudo actualizar la tarea");
       }
+    });
 
-      // quitar del DOM y actualizar el panel 
-      div.remove();
-      const fetchArrayTasks = await fetch("api/tasks");
-      const convertArrayTasks= await fetchArrayTasks.json();
-      showTotal(convertArrayTasks);
-      console.log(`Tarea ${task.id} eliminada`);
-    } catch (err) {
-      console.error("No se pudo borrar la tarea:", err);
-      alert("Error al borrar la tarea");
-    }
-  });
+    // Botón borrar
+    const deleteBtn = div.querySelector(".deleteTaskBtn");
+    deleteBtn.addEventListener("click", async () => {
+      const confirmDelete = confirm("¿Seguro que quieres eliminar esta tarea?");
+      if (!confirmDelete) return;
 
-  containerTasks.appendChild(div);
-}
+      try {
+        const res = await fetch(`/api/tasks/${task.id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error("Error al eliminar la tarea");
 
+        div.remove();
+        const tasksData = await fetch("/api/tasks").then(r => r.json());
+        showTotal(tasksData);
+        updateFinishedPanel();
+      } catch (err) {
+        console.error("No se pudo borrar la tarea:", err);
+        alert("Error al borrar la tarea");
+      }
+    });
 
+    containerTasks.appendChild(div);
+  }
 
-
-  // ✅ enviar nueva tarea
+  // ✅ Crear nueva tarea
   doneBtn.addEventListener("click", async () => {
     const name = document.getElementById("taskName").value.trim();
     const date = document.getElementById("taskDate").value;
@@ -101,10 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const payload = { name, date, hour };
+    const payload = { name, date, hour, done: false };
 
     try {
-      // 1) enviar al backend
       const res = await fetch("/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -116,58 +116,40 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error(errBody.error || `Error ${res.status}`);
       }
 
-      // 2) recibir la tarea creada desde el backend
       const createdTask = await res.json();
-
-      // 3) mostrarla en pantalla (sin recargar)
       renderTask(createdTask);
 
-      // 4) limpiar y cerrar el form
       document.getElementById("taskName").value = "";
       document.getElementById("taskDate").value = "";
       document.getElementById("taskHour").value = "";
       formTasks.classList.remove("show");
       createTaskBtn.style.display = "inline-block";
       containerTasks.style.display = "block";
+
+      const tasksData = await fetch("/api/tasks").then(r => r.json());
+      showTotal(tasksData);
+      updateFinishedPanel();
     } catch (err) {
       console.error("No se pudo crear la tarea:", err);
       alert("Ocurrió un error al guardar la tarea. Revisa la consola.");
     }
-     
-    //Mostrar informacion en el panel 
-
-    //Mostrar cuantas tareas hay
-     fetch("/api/tasks")
-    .then(res => res.json())
-    .then(data => {
-      showTotal(data); // muestra todas las tareas guardadas
-      
-    })
-    .catch(err => console.error("Error mostrando datos:", err));
   });
 
-  
-    function showTotal(tasks) {
-    if (!totalTasksPanelText) {
-        console.error("No se encontró el elemento totalTasksPanelText");
-        return;
-    }
+  // Mostrar total de tareas
+  function showTotal(tasks) {
+    totalTasksPanelText.textContent = `Total Tasks: ${tasks.length}`;
+  }
 
-    if (!tasks || tasks.length === 0) {
-        totalTasksPanelText.textContent = "Total Tasks: 0";
-        console.log("Total tasks: 0");
-        
-    } else {
-        totalTasksPanelText.textContent = `Total Tasks: ${tasks.length}`;
-        console.log("El total es", tasks.length);
-    }
+  // Actualizar panel de tareas completadas
+  function updateFinishedPanel() {
+    const allTasks = containerTasks.querySelectorAll(".task_Check");
+    const finishedCount = Array.from(allTasks).filter(cb => cb.checked).length;
+    finishedTaskPanelText.textContent = `Finished Tasks: ${finishedCount}`;
+  }
 
-   //total tareas completadas
-
-
-
-
-   
-}
-
+  // Inicializar panel de tareas completadas al cargar
+  function showFinished(tasks) {
+    const finishedCount = tasks.filter(t => t.done).length;
+    finishedTaskPanelText.textContent = `Finished Tasks: ${finishedCount}`;
+  }
 });

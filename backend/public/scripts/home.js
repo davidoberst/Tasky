@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const containerTasks = document.getElementById("containerTasks");
   const totalTasksPanelText = document.querySelector(".text_total_tasks");
   const finishedTaskPanelText = document.querySelector(".text_finished_tasks");
+  const delleteAllData = document.querySelector(".deleteAllButton");
+  
 
   // ✅ Cargar tareas al inicio
   fetch("/api/tasks")
@@ -142,6 +144,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Actualizar panel de tareas completadas
   function updateFinishedPanel() {
+
+
+    
     const allTasks = containerTasks.querySelectorAll(".task_Check");
     const finishedCount = Array.from(allTasks).filter(cb => cb.checked).length;
     finishedTaskPanelText.textContent = `Finished Tasks: ${finishedCount}`;
@@ -152,4 +157,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const finishedCount = tasks.filter(t => t.done).length;
     finishedTaskPanelText.textContent = `Finished Tasks: ${finishedCount}`;
   }
+
+  //Eliminar todas las tareas
+const deleteAllButton = document.querySelector(".deleteAllButton");
+
+deleteAllButton.addEventListener("click", async () => {
+  const confirmDelete = confirm("¿Seguro que quieres eliminar TODAS las tareas?");
+  if (!confirmDelete) return;
+
+  try {
+    const res = await fetch("/api/tasks", { method: "DELETE" });
+    if (!res.ok) throw new Error("Error al eliminar todas las tareas");
+
+    const data = await res.json();
+    console.log(data);
+
+    // limpiar el DOM
+    containerTasks.innerHTML = "";
+
+    // actualizar paneles
+    showTotal([]);
+    finishedTaskPanelText.textContent = "Finished Tasks: 0";
+  } catch (err) {
+    console.error("No se pudieron borrar todas las tareas:", err);
+    alert("Error al borrar todas las tareas");
+  }
 });
+});
+

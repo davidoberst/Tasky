@@ -62,3 +62,15 @@ app.patch("/api/tasks/:id", (req, res) => {
   task.done = req.body.done; // true o false
   res.json(task);
 });
+
+//delete all tasks 
+
+app.delete("/api/tasks",(req,res) =>{
+ if(tasks.length === 0){
+     return res.status(404).json({ error: "No tasks to delete" });   
+ }
+  tasks.length = 0; // Vaciar array
+   console.log("All tasks deleted");
+   res.json({ message: "All tasks deleted successfully" });
+});
+

@@ -133,6 +133,8 @@ font-size: 19px;
   .text_total_tasks{
     padding-top: 8px;
   }
+
+  
    
    .text_finished_tasks{
     padding-top: 8px;
@@ -159,6 +161,7 @@ font-size: 19px;
     font-size: 18px;
     border-radius: 100px;
      transition: transform 0.2s ease, background-color 0.2s ease;
+     cursor: pointer;
 }
 
 .deleteAllButton:hover{
